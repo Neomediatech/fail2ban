@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  fail2ban:
+    image: neomediatech/fail2ban-alpine:latest
+    container_name: fail2ban
+    network_mode: "host"
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    volumes:
+      - "/srv/data/fail2ban/confs:/data"
+      - "/srv/data/logs:/var/log:ro"
+    env_file:
+      - "/srv/data/fail2ban/fail2ban.env"
+    restart: always
