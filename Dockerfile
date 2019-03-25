@@ -20,7 +20,7 @@ ARG FAIL2BAN_VERSION=0.10.4
 RUN apk update && apk upgrade && \
     apk add --no-cache tzdata && \
     cp /usr/share/zoneinfo/Europe/Rome /etc/localtime && \
-    apk add --no-cache tini bash ipset iptables ssmtp fail2ban && \
+    apk add --no-cache tini bash ipset iptables ssmtp fail2ban redis && \
     rm -rf /usr/local/share/doc /usr/local/share/man /var/cache/apk/* /tmp/* /etc/fail2ban/jail.d
     
 COPY entrypoint.sh /entrypoint.sh
