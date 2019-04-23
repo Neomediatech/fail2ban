@@ -38,7 +38,7 @@ ln -sf /data/jail.d /etc/fail2ban/
 
 # Fail2ban conf
 echo "Setting Fail2ban configuration..."
-sed -i "s/logtarget =.*/logtarget = STDOUT/g" /etc/fail2ban/fail2ban.conf
+# sed -i "s/logtarget =.*/logtarget = STDOUT/g" /etc/fail2ban/fail2ban.conf
 sed -i "s/loglevel =.*/loglevel = $F2B_LOG_LEVEL/g" /etc/fail2ban/fail2ban.conf
 sed -i "s/dbfile =.*/dbfile = \/data\/db\/fail2ban\.sqlite3/g" /etc/fail2ban/fail2ban.conf
 sed -i "s/dbpurgeage =.*/dbpurgeage = $F2B_DB_PURGE_AGE/g" /etc/fail2ban/fail2ban.conf
@@ -75,4 +75,11 @@ for filter in ${filters}; do
   ln -sf "/data/filter.d/${filter}" "/etc/fail2ban/filter.d/"
 done
 
+LOG="/var/log/fail2ban.log"
+if [ ! -f $LOG ]; then
+	touch $LOG
+	chmod 666 $LOG
+fi
+
+exec tail -f $LOG &
 exec "$@"
