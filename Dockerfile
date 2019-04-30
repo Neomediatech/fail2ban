@@ -29,7 +29,7 @@ RUN chmod a+x /entrypoint.sh
 
 VOLUME [ "/data" ]
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+ENTRYPOINT [ "/sbin/tini", "--", "/entrypoint.sh" ]
 CMD [ "fail2ban-server", "-f", "-x", "-v", "start" ]
 
 HEALTHCHECK --interval=10s --timeout=5s CMD fail2ban-client ping
