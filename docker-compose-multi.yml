@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   fail2ban-input:
-    image: neomediatech/fail2ban-alpine:latest
+    image: neomediatech/fail2ban:latest
     container_name: fail2ban-input
     network_mode: "host"
     cap_add:
@@ -18,7 +18,7 @@ services:
     restart: always
 
   fail2ban-docker:
-    image: neomediatech/fail2ban-alpine:latest
+    image: neomediatech/fail2ban:latest
     container_name: fail2ban-docker
     network_mode: "host"
     cap_add:
