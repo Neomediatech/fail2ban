@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   fail2ban:
-    image: neomediatech/fail2ban-alpine:latest
+    image: neomediatech/fail2ban:latest
     container_name: fail2ban
     network_mode: "host"
     cap_add:
