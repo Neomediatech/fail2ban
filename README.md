@@ -1,4 +1,3 @@
-# WARN! WIP! YHBW...
 Fail2ban Docker image based on Ubuntu
 
 ## Warning
