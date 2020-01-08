@@ -75,11 +75,13 @@ for filter in ${filters}; do
   ln -sf "/data/filter.d/${filter}" "/etc/fail2ban/filter.d/"
 done
 
-LOG="/var/log/fail2ban.log"
-if [ ! -f $LOG ]; then
-	touch $LOG
-	chmod 666 $LOG
+LOGDIR="${LOGDIR:-/data/log}"
+[ ! -d "${LOGDIR}" ] && mkdir -p "${LOGDIR}"
+LOGFILE="${LOGDIR}/fail2ban.log"
+if [ ! -f $LOGFILE ]; then
+	touch $LOGFILE
+	chmod 666 $LOGFILE
 fi
 
-exec tail -f $LOG &
+exec tail -f $LOGFILE &
 exec "$@"
