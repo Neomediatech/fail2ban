@@ -13,7 +13,8 @@ LABEL maintainer="docker-dario@neomediatech.it" \
 RUN apt update && apt -y dist-upgrade && \
     apt install -y --no-install-recommends fail2ban ipset iptables ssmtp redis-tools curl && \
     rm -rf /var/lib/apt/lists* && \
-    rm -rf /etc/fail2ban/jail.d 
+    rm -rf /etc/fail2ban/jail.d && \
+    mkdir -p /var/run/fail2ban
     
 COPY entrypoint.sh /entrypoint.sh
 
