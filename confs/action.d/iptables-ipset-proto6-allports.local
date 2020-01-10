@@ -1,0 +1,31 @@
+[INCLUDES]
+
+before = iptables-common.conf
+
+[Definition]
+
+actionstart = <iptables> -D <chain> -m set --match-set <ipmset> src -j <blocktype> 2>/dev/null || ok=ok
+              ipset create <ipmset> hash:ip timeout <bantime><familyopt> 2>/dev/null || ok=ok
+              <iptables> -I <chain> -m set --match-set <ipmset> src -j <blocktype>
+
+actionflush = ipset flush <ipmset>
+
+actionstop = <iptables> -D <chain> -m set --match-set <ipmset> src -j <blocktype>
+             <actionflush>
+             ipset destroy <ipmset>
+
+actionban = ipset add <ipmset> <ip> timeout <bantime> -exist
+
+actionunban = ipset del <ipmset> <ip> -exist
+
+[Init]
+
+bantime = 600
+
+ipmset = f2b-<name>
+familyopt =
+
+[Init?family=inet6]
+
+ipmset = f2b-<name>6
+familyopt = <sp>family inet6
