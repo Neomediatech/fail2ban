@@ -1,7 +1,6 @@
 FROM neomediatech/ubuntu-base:latest
 
 ENV VERSION=0.10.2-2 \
-    DEBIAN_FRONTEND=noninteractive \
     SERVICE=fail2ban
 
 LABEL maintainer="docker-dario@neomediatech.it" \ 
