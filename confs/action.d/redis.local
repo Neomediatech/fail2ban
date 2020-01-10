@@ -1,0 +1,21 @@
+[Definition]
+
+# Make sure the redis server is started -- just in case
+actionstart = 
+
+# Don't stop the redis server any way
+actionstop = 
+
+# Don't need to check for anything before banning since using a set with redis
+actioncheck = 
+
+# Add ip to redis set on ban
+actionban = /usr/bin/timeout 3s redis-cli -h <rhost> -p <rport> SET <key>:<ip> "<msg> [<ip>] (<ip-host>)" EX <ttl>
+
+# Remove ip from redis set on unban
+actionunban =
+
+[Init]
+key   = bad:defer:honey:honey:0
+rhost = 127.0.0.1
+rport = 6379
