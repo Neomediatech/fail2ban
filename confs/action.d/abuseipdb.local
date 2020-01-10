@@ -1,0 +1,11 @@
+[Definition]
+actionstart =
+actionstop =
+actioncheck =
+actionban = DATE=`LC_ALL=C date +"%%Y-%%m-%%d %%H:%%M:%%S"` && curl -k -s https://api.abuseipdb.com/api/v2/report --data-urlencode "ip=<ip>" -d categories=<category> --data-urlencode "comment=DATE:$DATE, IP:<ip>, PORT:<port> <msg>" -H "Key: <apikey>" -H "Accept: application/json"
+
+actionunban = 
+
+[Init]
+apikey = put-your-abuseipdb-api-key-here
+
