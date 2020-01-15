@@ -18,12 +18,16 @@ echo "Setting SSMTP configuration..."
 if [ -z "$SSMTP_HOST" ] ; then
   echo "WARNING: SSMTP_HOST must be defined if you want fail2ban to send emails"
 else
+  AUTH_USER=""
+  AUTH_PASS=""
+  [ -n "${SSMTP_USER}" ] && AUTH_USER="AuthUser=${SSMTP_USER}"
+  [ -n "${SSMTP_PASSWORD}" ] && AUTH_PASS="AuthPass=${SSMTP_PASSWORD}"
   cat > /etc/ssmtp/ssmtp.conf <<EOL
 mailhub=${SSMTP_HOST}:${SSMTP_PORT}
 hostname=${SSMTP_HOSTNAME}
 FromLineOverride=YES
-AuthUser=${SSMTP_USER}
-AuthPass=${SSMTP_PASSWORD}
+$AUTH_USER
+$AUTH_PASS
 UseTLS=${SSMTP_TLS}
 UseSTARTTLS=${SSMTP_TLS}
 EOL
