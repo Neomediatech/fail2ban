@@ -1,0 +1,12 @@
+[INCLUDES]
+before = common.conf
+
+[Definition]
+
+failregex = ^%(__prefix_line)sAccepted \S+ for .*? from <HOST>(?: port \d*)?(?: ssh\d*)?(: (ruser .*|(\S+ ID \S+ \(serial \d+\) CA )?\S+ %(__md5hex)s(, client user ".*", client host ".*")?))?\s*$
+
+ignoreregex = 
+
+[Init]
+maxlines = 10
+journalmatch = _SYSTEMD_UNIT=sshd.service + _COMM=sshd
