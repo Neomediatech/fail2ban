@@ -16,7 +16,7 @@ actionban = printf %%b "Hi,\n
             Lines containing IP:<ip> in <logpath>\n
             `grep -E <grepopts> '(^|[^0-9])<ip>([^0-9]|$)' <logpath>`\n\n
             Regards,\n
-            Fail2Ban"|mail -s "[Fail2Ban] <name>: ssh access <ip> from  `uname -n`" -r <sender> <dest>
+            Fail2Ban"|sendmail -s "[Fail2Ban] <name>: ssh access <ip> from  `uname -n`" -r <sender> <dest>
 
 actionunban = 
 
