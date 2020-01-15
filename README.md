@@ -13,9 +13,17 @@ Fail2ban Docker image based on Ubuntu
 | SSMTP_PORT | 25| SMTP port |
 | (other settings) | () | see entrypoint.sh |
 
+## Running
+```
+BASE_DIR="/srv/data/docker/containers/fail2ban/"
+NAME="fail2ban"
+docker run -d --privileged --net=host --name $NAME --hostname $NAME -v $BASED_DIR/confs:/data neomediatech/$NAME
+```
+Add a bind mount where to point your logs that f2b need to monitor for ex:
+`-v $BASED_DIR/logs:/var/log`
+
 ## Warning
 Portainer doesn't understand `env_file` parameter (at least for now, 27 feb 2019).
 
 ## Wishlist
 - [ ] Use a init system to allow f2b to reload rules without reload container
-
