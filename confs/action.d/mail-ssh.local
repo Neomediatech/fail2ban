@@ -1,0 +1,27 @@
+[INCLUDES]
+before = mail-whois-common.conf
+
+[Definition]
+
+actionstart = 
+
+actionstop = 
+
+actioncheck = 
+
+actionban = printf %%b "Hi,\n
+            The IP <ip> has just been authorized to access ssh port <port>
+            Here is more information about <ip> :\n
+            `%(_whois_command)s`\n\n
+            Lines containing IP:<ip> in <logpath>\n
+            `grep -E <grepopts> '(^|[^0-9])<ip>([^0-9]|$)' <logpath>`\n\n
+            Regards,\n
+            Fail2Ban"|mail -s "[Fail2Ban] <name>: ssh access <ip> from  `uname -n`" -r <sender> <dest>
+
+actionunban = 
+
+[Init]
+name = default
+dest = root
+logpath = /dev/null
+grepopts = -m 1000
