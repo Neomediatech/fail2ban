@@ -9,8 +9,8 @@ LABEL maintainer="docker-dario@neomediatech.it" \
       org.label-schema.vcs-url=https://github.com/Neomediatech/${SERVICE} \
       org.label-schema.maintainer=Neomediatech
 
-RUN apt update && apt -y dist-upgrade && \
-    apt install -y --no-install-recommends fail2ban ipset iptables ssmtp redis-tools curl whois && \
+RUN apt update && apt-get -y dist-upgrade && \
+    apt-get install -y --no-install-recommends fail2ban ipset iptables ssmtp redis-tools curl whois && \
     rm -rf /var/lib/apt/lists* && \
     rm -rf /etc/fail2ban/jail.d && \
     mkdir -p /var/run/fail2ban
