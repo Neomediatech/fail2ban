@@ -74,6 +74,14 @@ done
 # AbuseIPDB setting
 [ -n "${ABUSEIPDB_APIKEY}" -a -f "/data/action.d/abuseipdb.local" ] && sed -i "s/^apikey.*/apikey = $ABUSEIPDB_APIKEY/g" /data/action.d/abuseipdb.local
 
+# REDIS settings
+REDIS_ACTION="/data/action.d/redis.local"
+if [ -f ${REDIS_ACTION} ]; then
+   [ -n "${REDIS_KEY}" ] && sed -i "s/^key.*/key = $REDIS_KEY/g" ${REDIS_ACTION}
+   [ -n "${REDIS_HOST}" ] && sed -i "s/^rhost.*/rhost = $REDIS_HOST/g" ${REDIS_ACTION}
+   [ -n "${REDIS_PORT}" ] && sed -i "s/^rport.*/rport = $REDIS_PORT/g" ${REDIS_ACTION}
+fi
+
 # Check custom filters
 echo "Checking for custom filters in /data/filter.d..."
 filters=$(ls -l /data/filter.d | egrep '^-' | awk '{print $9}')
