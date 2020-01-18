@@ -1,0 +1,16 @@
+#
+
+[INCLUDES]
+
+# Read common prefixes. If any customizations available -- read them from
+# exim-common.local
+before = exim-common.conf
+
+[Definition]
+
+failregex = ^%(pid)s WARNING: \[<HOST>\] found in cbl.abuseat.org .*$
+
+
+ignoreregex = 
+
+[Init]
