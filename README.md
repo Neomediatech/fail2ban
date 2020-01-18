@@ -1,4 +1,6 @@
-Fail2ban Docker image based on Ubuntu
+Fail2ban Docker image based on Ubuntu  
+
+Clone this repo if you want to use configs already set by me.
 
 ## Configs
 - If you use [AbuseIPDB](https://www.abuseipdb.com) to query and/or report malicious IP, set an [AbuseIPDB API Key](https://www.abuseipdb.com/account/api) in [confs/action.d/abuseipdb.local](confs/action.d/abuseipdb.local) or declare the docker env var __ABUSEIPDB_APIKEY__
