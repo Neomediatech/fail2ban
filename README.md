@@ -1,7 +1,7 @@
 Fail2ban Docker image based on Ubuntu
 
 ## Configs
-- Put your [AbuseIPDB API Key](https://www.abuseipdb.com/account/api) in [confs/action.d/abuseipdb.local](confs/action.d/abuseipdb.local)
+- If you use [AbuseIPDB](https://www.abuseipdb.com) to query and/or report malicious IP, set an [AbuseIPDB API Key](https://www.abuseipdb.com/account/api) in [confs/action.d/abuseipdb.local](confs/action.d/abuseipdb.local) or declare the docker env var __ABUSEIPDB_APIKEY__
 - Set `rhost` and `rport` in [confs/action.d/redis.local](confs/action.d/redis.local) to match your Redis instance
 - Set `nodename` and `ignoreip` in [jail.d/neo.conf](jail.d/neo.conf) to match your needs  
 
@@ -11,6 +11,7 @@ Fail2ban Docker image based on Ubuntu
 | F2B_SENDER | root@$(hostname -f) | sender email for reports |
 | SSMTP_HOST | none | SMTP host to use for send email |
 | SSMTP_PORT | 25| SMTP port |
+| ABUSEIPDB_APIKEY | (unset) | API key taken from [AbuseIPDB](https://www.abuseipdb.com) |
 | (other settings) | () | see entrypoint.sh |
 
 ## Running
