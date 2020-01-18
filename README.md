@@ -16,7 +16,9 @@ Clone this repo if you want to use configs already set by me.
 | ABUSEIPDB_APIKEY | (unset) | API key taken from [AbuseIPDB](https://www.abuseipdb.com) |
 | REDIS_KEY | bad:defer:honey:honey:0 | key used to store matches in a Redis server |
 | REDIS_HOST | 127.0.0.1 | Redis server address |
-| REDIS_PORT | 6379 | Redis server port
+| REDIS_PORT | 6379 | Redis server port |
+| NODE_NAME | honey-node | Assign a name to this node |
+| IGNORE_IP | 127.0.0.1 | IP or CIDR list to ignore from ban |
 | (other settings) | () | see entrypoint.sh |   
 
 ## Running
