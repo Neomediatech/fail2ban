@@ -71,6 +71,9 @@ for action in ${actions}; do
   ln -sf "/data/action.d/${action}" "/etc/fail2ban/action.d/"
 done
 
+# AbuseIPDB setting
+[ -n "${ABUSEIPDB_APIKEY}" -a -f "/data/action.d/abuseipdb.local" ] && sed -i "s/^apikey.*/apikey = $ABUSEIPDB_APIKEY/g" /data/action.d/abuseipdb.local
+
 # Check custom filters
 echo "Checking for custom filters in /data/filter.d..."
 filters=$(ls -l /data/filter.d | egrep '^-' | awk '{print $9}')
