@@ -43,6 +43,13 @@ touch /var/log/{mainlog,dovecot.log,opencanary.log,auth.log} /dnsbl-log/dnsbl-fo
 chmod 666 /var/log/* /dnsbl-log/dnsbl-for-fail2ban.log
 ln -sf /data/jail.d /etc/fail2ban/
 
+# Set some settings in jail.d/10-defaults.conf
+DEFAULTS_FILE="/data/jail.d/10-defaults.conf"
+if [ -f "${DEFAULTS_FILE}" ]; then
+    [ -n "${NODE_NAME}" ] && sed -i "s/^nodename.*/nodename = ${NODE_NAME}/g" "${DEFAULTS_FILE}"
+    [ -n "${IGNORE_IP}" ] && sed -i "s/^ignoreip.*/ignoreip = ${IGNORE_IP}/g" "${DEFAULTS_FILE}"
+fi
+
 # Fail2ban conf
 echo "Setting Fail2ban configuration..."
 # sed -i "s/logtarget =.*/logtarget = STDOUT/g" /etc/fail2ban/fail2ban.conf
