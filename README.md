@@ -4,7 +4,7 @@ Clone this repo if you want to use configs already set by me.
 
 ## Configs
 - If you use [AbuseIPDB](https://www.abuseipdb.com) to query and/or report malicious IP, set an [AbuseIPDB API Key](https://www.abuseipdb.com/account/api) in [confs/action.d/abuseipdb.local](confs/action.d/abuseipdb.local) or declare the docker env var __ABUSEIPDB_APIKEY__
-- Set `rhost` and `rport` in [confs/action.d/redis.local](confs/action.d/redis.local) to match your Redis instance
+- If you want to use a Redis instance to store matches, configure [confs/action.d/redis.local](confs/action.d/redis.local) and set `rhost` and `rport` or declare the docker env vars __REDIS_HOST__, __REDIS_PORT__ and __REDIS_KEY__ 
 - Set `nodename` and `ignoreip` in [jail.d/neo.conf](jail.d/neo.conf) to match your needs  
 
 | Variable | Default | Description |
@@ -14,7 +14,10 @@ Clone this repo if you want to use configs already set by me.
 | SSMTP_HOST | none | SMTP host to use for send email |
 | SSMTP_PORT | 25| SMTP port |
 | ABUSEIPDB_APIKEY | (unset) | API key taken from [AbuseIPDB](https://www.abuseipdb.com) |
-| (other settings) | () | see entrypoint.sh |
+| REDIS_KEY | bad:defer:honey:honey:0 | key used to store matches in a Redis server |
+| REDIS_HOST | 127.0.0.1 | Redis server address |
+| REDIS_PORT | 6379 | Redis server port
+| (other settings) | () | see entrypoint.sh |   
 
 ## Running
 ```
