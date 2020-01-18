@@ -1,0 +1,14 @@
+# Fail2Ban configuration file
+#
+
+[INCLUDES]
+
+# Read common prefixes. If any customizations available -- read them from
+# exim-common.local
+before = exim-common.conf
+
+[Definition]
+
+failregex = ^%(pid)s \w+ authenticator failed for (\S+ )?\(\S+\) \[<HOST>\](:\d+)?( I=\[\S+\](:\d+)?)?: 535 Incorrect authentication data( \(set_id=.*\)|: \d+ Time\(s\))?\s*$
+
+ignoreregex =
