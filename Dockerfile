@@ -10,7 +10,7 @@ LABEL maintainer="docker-dario@neomediatech.it" \
       org.label-schema.vcs-url=https://github.com/Neomediatech/${SERVICE} \
       org.label-schema.maintainer=Neomediatech
 
-RUN apt update && apt-get -y dist-upgrade && \
+RUN apt-get update && apt-get -y dist-upgrade && \
     apt-get install -y --no-install-recommends ca-certificates python3 python-setuptools \
     python3-pycurl wget ipset iptables ssmtp redis-tools curl whois && \
     rm -rf /var/lib/apt/lists* && \
