@@ -1,4 +1,4 @@
-FROM neomediatech/ubuntu-base:latest
+FROM neomediatech/ubuntu-base:20.04
 
 ENV VERSION=0.11.1 \
     SERVICE=fail2ban \
@@ -20,7 +20,7 @@ RUN apt-get update && apt-get -y dist-upgrade && \
     wget https://github.com/fail2ban/fail2ban/archive/${FAIL2BAN_VERSION}.tar.gz -O fail2ban-${FAIL2BAN_VERSION}.tar.gz && \
     tar xvzf fail2ban-${FAIL2BAN_VERSION}.tar.gz && \
     cd fail2ban-${FAIL2BAN_VERSION} && \
-    python setup.py install && \
+    python2.7 setup.py install && \
     cd / && \
     mkdir -p /usr/local/etc/fail2ban && \
     cp -rp /etc/fail2ban /usr/local/etc && \
