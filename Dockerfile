@@ -1,8 +1,8 @@
 FROM neomediatech/ubuntu-base:latest
 
-ENV VERSION=0.10.5 \
+ENV VERSION=0.11.1 \
     SERVICE=fail2ban \
-    FAIL2BAN_VERSION=0.10.5
+    FAIL2BAN_VERSION=0.11.1
 
 LABEL maintainer="docker-dario@neomediatech.it" \ 
       org.label-schema.version=$VERSION \
