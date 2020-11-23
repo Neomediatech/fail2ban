@@ -1,6 +1,6 @@
-FROM neomediatech/ubuntu-base:latest
+FROM neomediatech/ubuntu-base:20.04
 
-ENV VERSION=0.10.2-2 \
+ENV VERSION=0.11.1 \
     SERVICE=fail2ban
 
 LABEL maintainer="docker-dario@neomediatech.it" \ 
