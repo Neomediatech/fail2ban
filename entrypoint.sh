@@ -40,7 +40,7 @@ unset SSMTP_PASSWORD
 echo "Initializing files and folders..."
 mkdir -p /data/db /data/action.d /data/filter.d /data/jail.d /var/log /dnsbl-log
 touch /var/log/{mainlog,dovecot.log,opencanary.log,auth.log} /dnsbl-log/dnsbl-for-fail2ban.log
-chmod 666 /var/log/* /dnsbl-log/dnsbl-for-fail2ban.log
+chmod 666 $(find /var/log/ -type f) /dnsbl-log/dnsbl-for-fail2ban.log
 ln -sf /data/jail.d /etc/fail2ban/
 
 # Set some settings in jail.d/10-defaults.conf
