@@ -2,7 +2,7 @@ FROM neomediatech/ubuntu-base:20.04
 
 ENV VERSION=0.11.2 \
     SERVICE=fail2ban \
-    FAIL2BAN_VERSION=0.11.1
+    FAIL2BAN_VERSION=0.11.2
 
 LABEL maintainer="docker-dario@neomediatech.it" \ 
       org.label-schema.version=$VERSION \
