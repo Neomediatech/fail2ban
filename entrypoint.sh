@@ -39,9 +39,14 @@ unset SSMTP_PASSWORD
 # Init
 echo "Initializing files and folders..."
 mkdir -p /data/db /data/action.d /data/filter.d /data/jail.d /var/log /dnsbl-log
-touch /var/log/{mainlog,dovecot.log,opencanary.log,auth.log} /dnsbl-log/dnsbl-for-fail2ban.log
-chmod 666 $(find /var/log/ -type f) /dnsbl-log/dnsbl-for-fail2ban.log
 #ln -sf /data/jail.d /etc/fail2ban/
+
+# Set some settings in jail.d/10-defaults.conf
+DEFAULTS_FILE="/data/jail.d/10-defaults.conf"
+if [ -f "${DEFAULTS_FILE}" ]; then
+    [ -n "${NODE_NAME}" ] && sed -i "s/^nodename.*/nodename = ${NODE_NAME}/g" "${DEFAULTS_FILE}"
+    [ -n "${IGNORE_IP}" ] && sed -i "s/^ignoreip.*/ignoreip = ${IGNORE_IP}/g" "${DEFAULTS_FILE}"
+fi
 
 # Fail2ban conf
 echo "Setting Fail2ban configuration..."
@@ -94,23 +99,38 @@ for filter in ${filters}; do
   ln -sf "/data/filter.d/${filter}" "/etc/fail2ban/filter.d/"
 done
 
-# Set some settings in jail.d/10-defaults.conf	
-DEFAULTS_FILE="/data/jail.d/10-defaults.conf"	
-if [ -f "${DEFAULTS_FILE}" ]; then	
-    [ -n "${NODE_NAME}" ] && sed -i "s/^nodename.*/nodename = ${NODE_NAME}/g" "${DEFAULTS_FILE}"	
-    [ -n "${IGNORE_IP}" ] && sed -i "s/^ignoreip.*/ignoreip = ${IGNORE_IP}/g" "${DEFAULTS_FILE}"	
+# Set some settings in jail.d/10-defaults.conf  
+DEFAULTS_FILE="/data/jail.d/10-defaults.conf"
+if [ -f "${DEFAULTS_FILE}" ]; then
+    [ -n "${NODE_NAME}" ] && sed -i "s/^nodename.*/nodename = ${NODE_NAME}/g" "${DEFAULTS_FILE}"
+    [ -n "${IGNORE_IP}" ] && sed -i "s/^ignoreip.*/ignoreip = ${IGNORE_IP}/g" "${DEFAULTS_FILE}"
 fi
 
 # Check custom jails
 echo "Checking for custom jails in /data/jail.d..."
 jails=$(ls -l /data/jail.d | egrep '^-' | awk '{print $9}')
-for jail in ${jails}; do
-  if [ -f "/etc/fail2ban/jail.d/${jail}" ]; then
-    echo "  WARNING: ${jail} already exists and will be overriden"
-    rm -f "/etc/fail2ban/jail.d/${jail}"
-  fi
-  echo "  Add custom jail ${jail}..."
-  ln -sf "/data/jail.d/${jail}" "/etc/fail2ban/jail.d/"
+if [ -n "$jails" ]; then
+  for jail in ${jails}; do
+    if [ -f "/etc/fail2ban/jail.d/${jail}" ]; then
+      echo "  WARNING: ${jail} already exists and will be overriden"
+      rm -f "/etc/fail2ban/jail.d/${jail}"
+    fi
+    echo "  Add custom jail ${jail}..."
+    ln -sf "/data/jail.d/${jail}" "/etc/fail2ban/jail.d/"
+  done
+fi
+
+for file in $(ls /etc/fail2ban/jail.d); do
+  LOGPATHS="$(grep logpath /etc/fail2ban/jail.d/$file | awk -F= '{print $2}')"
+  for LOGPATH in $LOGPATHS; do
+    if [ ! -e "$LOGPATH" ]; then
+      mkdir -p "$(dirname "$LOGPATH")"
+      touch "$LOGPATH"
+      chmod 666 "$LOGPATH"
+    fi
+  done
+  touch /dnsbl-log/dnsbl-for-fail2ban.log
+  chmod 666 /dnsbl-log/dnsbl-for-fail2ban.log
 done
 
 [ ! -d "${F2B_LOGDIR}" ] && mkdir -p "${F2B_LOGDIR}"

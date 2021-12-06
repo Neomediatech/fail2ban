@@ -1,6 +1,6 @@
 FROM neomediatech/ubuntu-base:20.04
 
-ENV VERSION=0.11.1 \
+ENV VERSION=0.11.2 \
     SERVICE=fail2ban \
     FAIL2BAN_VERSION=0.11.1
 
@@ -11,7 +11,7 @@ LABEL maintainer="docker-dario@neomediatech.it" \
       org.label-schema.maintainer=Neomediatech
 
 RUN apt-get update && apt-get -y dist-upgrade && \
-    apt-get install -y --no-install-recommends ca-certificates python3 python3-setuptools \
+    apt-get install -y --no-install-recommends --no-install-suggests ca-certificates python3 python3-setuptools \
     python3-pycurl wget ipset iptables ssmtp redis-tools curl whois && \
     rm -rf /var/lib/apt/lists* && \
     rm -rf /etc/fail2ban/jail.d && \
