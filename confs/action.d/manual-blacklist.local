@@ -9,7 +9,6 @@ before = iptables-common.conf
 
 actionstart = ipset create <ipmset> hash:ip timeout <default-ipsettime> <familyopt> maxelem 4294967295
               <iptables> -I <chain> -m set --match-set <ipmset> src -j <blocktype>
-#	      [ -f /data/manual-blacklist-ip.list ] && (cat /data/manual-blacklist-ip.list | grep ^[[:digit:]] 2021-12-09 17:36:22 
 
 actionflush = ipset flush <ipmset>
 

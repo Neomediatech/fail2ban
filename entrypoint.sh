@@ -13,6 +13,8 @@ SSMTP_PORT=${SSMTP_PORT:-25}
 SSMTP_HOSTNAME=${SSMTP_HOSTNAME:-$(hostname -f)}
 SSMTP_TLS=${SSMTP_TLS:-NO}
 
+[ -f /data/config.ini ] && source /data/config.ini
+
 # SSMTP
 echo "Setting SSMTP configuration..."
 if [ -z "$SSMTP_HOST" ] ; then
