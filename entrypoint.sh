@@ -41,7 +41,6 @@ echo "Initializing files and folders..."
 mkdir -p /data/db /data/action.d /data/filter.d /data/jail.d /var/log /dnsbl-log
 touch /var/log/{mainlog,dovecot.log,opencanary.log,auth.log} /dnsbl-log/dnsbl-for-fail2ban.log
 chmod 666 $(find /var/log/ -type f) /dnsbl-log/dnsbl-for-fail2ban.log
-ln -sf /data/jail.d /etc/fail2ban/
 
 # Set some settings in jail.d/10-defaults.conf
 DEFAULTS_FILE="/data/jail.d/10-defaults.conf"
@@ -66,16 +65,23 @@ sender = ${F2B_SENDER}
 action = ${F2B_ACTION}
 EOL
 
-# Check custom actions
-echo "Checking for custom actions in /data/action.d..."
-actions=$(ls -l /data/action.d | egrep '^-' | awk '{print $9}')
-for action in ${actions}; do
-  if [ -f "/etc/fail2ban/action.d/${action}" ]; then
-    echo "  WARNING: ${action} already exists and will be overriden"
-    rm -f "/etc/fail2ban/action.d/${action}"
+# Check custom configuration files
+CUSTOM_CONF_BASE_DIR="/data"
+CUSTOM_CONF_DIRS="action.d filter.d jail.d fail2ban.d"
+for DIR in $CUSTOM_CONF_DIRS; do
+  CUSTOM_CONF_DIR="$CUSTOM_CONF_BASE_DIR/$DIR"
+  if [ -d "$CUSTOM_CONF_DIR" ]; then
+    echo "Checking for custom configuration files in ${CUSTOM_CONF_DIR}..."
+    find "$CUSTOM_CONF_DIR" -maxdepth 1 -type f -name '[!.]*.*' -printf "%f\n"| while read CONFIG_FILE ; do
+      if [ -f "/etc/fail2ban/${DIR}/${CONFIG_FILE}" ]; then
+        echo "  WARNING: ${CONFIG_FILE} already exists and will be overriden"
+        rm -f "/etc/fail2ban/${DIR}/${CONFIG_FILE}"
+      fi
+      echo "  Add custom config file ${CONFIG_FILE}..."
+      [ ! -d "/etc/fail2ban/${DIR}/" ] && mkdir -p "/etc/fail2ban/${DIR}/"
+      ln -sf "/data/${DIR}/${CONFIG_FILE}" "/etc/fail2ban/${DIR}/"
+    done
   fi
-  echo "  Add custom action ${action}..."
-  ln -sf "/data/action.d/${action}" "/etc/fail2ban/action.d/"
 done
 
 # AbuseIPDB setting
@@ -88,18 +94,6 @@ if [ -f ${REDIS_ACTION} ]; then
    [ -n "${REDIS_HOST}" ] && sed -i "s/^rhost.*/rhost = $REDIS_HOST/g" ${REDIS_ACTION}
    [ -n "${REDIS_PORT}" ] && sed -i "s/^rport.*/rport = $REDIS_PORT/g" ${REDIS_ACTION}
 fi
-
-# Check custom filters
-echo "Checking for custom filters in /data/filter.d..."
-filters=$(ls -l /data/filter.d | egrep '^-' | awk '{print $9}')
-for filter in ${filters}; do
-  if [ -f "/etc/fail2ban/filter.d/${filter}" ]; then
-    echo "  WARNING: ${filter} already exists and will be overriden"
-    rm -f "/etc/fail2ban/filter.d/${filter}"
-  fi
-  echo "  Add custom filter ${filter}..."
-  ln -sf "/data/filter.d/${filter}" "/etc/fail2ban/filter.d/"
-done
 
 [ ! -d "${F2B_LOGDIR}" ] && mkdir -p "${F2B_LOGDIR}"
 LOGFILE="${F2B_LOGDIR}/fail2ban.log"
