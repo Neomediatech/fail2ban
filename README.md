@@ -31,7 +31,9 @@ Add a bind mount where to point your logs that f2b need to monitor for ex:
 `-v $BASED_DIR/logs:/var/log`
 
 ## Warning
-Portainer doesn't understand `env_file` parameter (at least for now, 27 feb 2019).
+- Portainer doesn't understand `env_file` parameter (at least for now, 27 feb 2019).
+- If you use fail2ban as Docker container keep attention to kernel version used in host and in compiling the image.  
+  If they differs may be you cannot see host iptables rules. (At least this is I saw using Ubuntu 22.04 on host and fail2ban compiled on a Ubunru 20.04). This is not a fail2ban problem, but a iptables problem with different kernels.
 
 ## Wishlist
 - [ ] Use a init system to allow f2b to reload rules without reload container
