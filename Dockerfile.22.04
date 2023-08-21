@@ -18,7 +18,7 @@ RUN apt-get update && apt-get -y dist-upgrade && \
     rm -rf /etc/fail2ban/jail.d && \
     mkdir -p /var/run/fail2ban && \
     cd /tmp && \
-    wget https://github.com/fail2ban/fail2ban/releases/download/1.0.1/fail2ban_${APP_VERSION}-1.upstream1_all.deb && \
+    wget https://github.com/fail2ban/fail2ban/releases/download/${APP_VERSION}/fail2ban_${APP_VERSION}-1.upstream1_all.deb && \
     dpkg -i fail2ban_${APP_VERSION}-1.upstream1_all.deb && \
     cd / && \
     #mkdir -p /usr/local/etc/fail2ban && \
