@@ -1,0 +1,49 @@
+# Fail2Ban configuration file
+#
+
+[INCLUDES]
+
+before = iptables-common.conf
+
+[Definition]
+
+actionstart = ipset create <ipmset> hash:ip timeout <default-ipsettime> <familyopt> maxelem 4294967295
+              <iptables> -I <chain> -m set --match-set <ipmset> src -j <blocktype>
+
+actionflush = ipset flush <ipmset>
+
+actionstop = <iptables> -D <chain> -m set --match-set <ipmset> src -j <blocktype>
+             <actionflush>
+             ipset destroy <ipmset>
+
+actionban = ipset add <ipmset> <ip><F-MASK> timeout <ipsettime> -exist
+
+# actionprolong = %(actionban)s
+
+actionunban = ipset del <ipmset> <ip><F-MASK> -exist
+
+[Init]
+
+# Option: default-ipsettime
+# Notes:  specifies default timeout in seconds (handled default ipset timeout only)
+# Values:  [ NUM ]  Default: 0 (no timeout, managed by fail2ban by unban)
+default-ipsettime = 0
+
+# Option: ipsettime
+# Notes:  specifies ticket timeout (handled ipset timeout only)
+# Values:  [ NUM ]  Default: 0 (managed by fail2ban by unban)
+ipsettime = 0
+
+# expresion to caclulate timeout from bantime, example:
+# banaction = %(known/banaction)s[ipsettime='<timeout-bantime>']
+timeout-bantime = $([ "<bantime>" -le 2147483 ] && echo "<bantime>" || echo 0)
+
+ipmset = f2b-<name>
+familyopt =
+
+
+[Init?family=inet6]
+
+ipmset = f2b-<name>6
+familyopt = family inet6
+

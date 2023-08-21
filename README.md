@@ -25,10 +25,10 @@ Clone this repo if you want to use configs already set by me.
 ```
 BASE_DIR="/srv/data/docker/containers/fail2ban/"
 NAME="fail2ban"
-docker run -d --privileged --net=host --name $NAME --hostname $NAME -v $BASED_DIR/confs:/data neomediatech/$NAME
+docker run -d --privileged --net=host --name $NAME --hostname $NAME -v $BASE_DIR/confs:/data neomediatech/$NAME
 ```
 Add a bind mount where to point your logs that f2b need to monitor for ex:
-`-v $BASED_DIR/logs:/var/log`
+`-v $BASE_DIR/logs:/var/log`
 
 ## Warning
 - Portainer doesn't understand `env_file` parameter (at least for now, 27 feb 2019).
