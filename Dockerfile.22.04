@@ -1,7 +1,7 @@
 FROM neomediatech/ubuntu-base:22.04
 
 ENV SERVICE=fail2ban \
-    APP_VERSION=1.0.1
+    APP_VERSION=1.0.2
 
 LABEL maintainer="docker-dario@neomediatech.it" \ 
       org.label-schema.version=$APP_VERSION \
