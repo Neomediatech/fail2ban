@@ -11,26 +11,26 @@ LABEL maintainer="docker-dario@neomediatech.it" \
 
 RUN apt-get update && apt-get -y dist-upgrade && \
     apt-get install -y --no-install-recommends --no-install-suggests \
-                    libexpat1 libpython3-stdlib libpython3.12-minimal libpython3.12-stdlib \
-                    libreadline8t64 libsqlite3-0 media-types python3 python3-minimal \
-                    python3-systemd python3.12 python3.12-minimal readline-common \
+                    python3 python3-systemd \
                     wget ipset iptables ssmtp redis-tools curl whois ca-certificates jq && \
     rm -rf /var/lib/apt/lists* && \
     rm -rf /etc/fail2ban/jail.d && \
     mkdir -p /var/run/fail2ban && \
     cd /tmp && \
-    if [[ "$APP_VERSION" == "latest" ]]; then \
+    if [ "$APP_VERSION" = "latest" ]; then \
 	TAG=""; \
     else \
 	TAG="tags/"; \
     fi && \
+    echo "TAG=$TAG" && \
+    echo "APP_VERSION=$APP_VERSION" && \
     APP_VERSION="$(basename $(curl -s https://api.github.com/repos/fail2ban/fail2ban/releases/${TAG}${APP_VERSION} | jq -r '.tag_name'))" && \
+    echo "APP_VERSION=$APP_VERSION" && \
     wget https://github.com/fail2ban/fail2ban/releases/download/${APP_VERSION}/fail2ban_${APP_VERSION}-1.upstream1_all.deb && \
     dpkg -i fail2ban_${APP_VERSION}-1.upstream1_all.deb && \
     cd / && \
     rm -rfv /tmp/*
 
-    
 COPY entrypoint.sh /entrypoint.sh
 
 RUN chmod a+x /entrypoint.sh

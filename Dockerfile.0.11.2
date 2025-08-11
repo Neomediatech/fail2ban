@@ -1,5 +1,5 @@
 ARG STICKY_VERSION=0.11.2
-FROM neomediatech/ubuntu-base:24.04
+FROM neomediatech/ubuntu-base:20.04
 
 ENV SERVICE=fail2ban \
     APP_VERSION=0.11.2
@@ -10,17 +10,14 @@ LABEL maintainer="docker-dario@neomediatech.it" \
       org.label-schema.vcs-url=https://github.com/Neomediatech/${SERVICE} \
       org.label-schema.maintainer=Neomediatech
 
-RUN apt-get update && apt-get -y dist-upgrade && \
+RUN apt-get update && \
     apt-get install -y --no-install-recommends --no-install-suggests \
-                    libexpat1 libpython3-stdlib libpython3.12-minimal libpython3.12-stdlib \
-                    libreadline8t64 libsqlite3-0 media-types python3 python3-minimal \
-                    python3-systemd python3.12 python3.12-minimal readline-common \
+                    python3.10 python3-systemd \
                     wget ipset iptables ssmtp redis-tools curl whois ca-certificates jq && \
     rm -rf /var/lib/apt/lists* && \
-    rm -rf /etc/fail2ban/jail.d && \
     mkdir -p /var/run/fail2ban && \
     cd /tmp && \
-    if [[ "$APP_VERSION" == "latest" ]]; then \
+    if [ "$APP_VERSION" = "latest" ]; then \
 	TAG=""; \
     else \
 	TAG="tags/"; \
@@ -29,7 +26,9 @@ RUN apt-get update && apt-get -y dist-upgrade && \
     wget https://github.com/fail2ban/fail2ban/releases/download/${APP_VERSION}/fail2ban_${APP_VERSION}-1.upstream1_all.deb && \
     dpkg -i fail2ban_${APP_VERSION}-1.upstream1_all.deb && \
     cd / && \
-    rm -rfv /tmp/*
+    echo "[sshd]" > /etc/fail2ban/jail.d/disable-sshd.conf && \
+    echo "enabled = false" >> /etc/fail2ban/jail.d/disable-sshd.conf && \
+    rm -rfv /tmp/* /etc/fail2ban/jail.d/*
 
     
 COPY entrypoint.sh /entrypoint.sh
