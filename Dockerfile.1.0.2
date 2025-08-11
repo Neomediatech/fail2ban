@@ -1,4 +1,4 @@
-FROM neomediatech/ubuntu-base:22.04
+FROM neomediatech/ubuntu-base:24.04
 
 ENV SERVICE=fail2ban \
     APP_VERSION=1.0.2
@@ -11,19 +11,22 @@ LABEL maintainer="docker-dario@neomediatech.it" \
 
 RUN apt-get update && apt-get -y dist-upgrade && \
     apt-get install -y --no-install-recommends --no-install-suggests \
-                    libexpat1 libmpdec3 libpython3-stdlib libpython3.10-minimal libpython3.10-stdlib \
-                    libreadline8 libsqlite3-0 media-types python3 python3-minimal python3.10 python3.10-minimal \
-                    readline-common wget ipset iptables ssmtp redis-tools curl whois ca-certificates && \
+                    python3 python3-pip \
+                    wget ipset iptables ssmtp redis-tools curl whois ca-certificates jq && \
+    python3 -m pip install pyasynchat --break-system-packages && \
     rm -rf /var/lib/apt/lists* && \
-    rm -rf /etc/fail2ban/jail.d && \
     mkdir -p /var/run/fail2ban && \
     cd /tmp && \
+    if [[ "$APP_VERSION" == "latest" ]]; then \
+	TAG=""; \
+    else \
+	TAG="tags/"; \
+    fi && \
+    APP_VERSION="$(basename $(curl -s https://api.github.com/repos/fail2ban/fail2ban/releases/${TAG}${APP_VERSION} | jq -r '.tag_name'))" && \
     wget https://github.com/fail2ban/fail2ban/releases/download/${APP_VERSION}/fail2ban_${APP_VERSION}-1.upstream1_all.deb && \
     dpkg -i fail2ban_${APP_VERSION}-1.upstream1_all.deb && \
     cd / && \
-    #mkdir -p /usr/local/etc/fail2ban && \
-    #cp -rp /etc/fail2ban /usr/local/etc && \
-    rm -rfv /tmp/*
+    rm -rfv /tmp/* /etc/fail2ban/jail.d/*
 
     
 COPY entrypoint.sh /entrypoint.sh

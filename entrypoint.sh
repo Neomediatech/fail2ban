@@ -57,7 +57,11 @@ sed -i "s/loglevel =.*/loglevel = $F2B_LOG_LEVEL/g" /etc/fail2ban/fail2ban.conf
 sed -i "s/dbfile =.*/dbfile = \/data\/db\/fail2ban\.sqlite3/g" /etc/fail2ban/fail2ban.conf
 sed -i "s/dbpurgeage =.*/dbpurgeage = $F2B_DB_PURGE_AGE/g" /etc/fail2ban/fail2ban.conf
 sed -i "s%logtarget =.*%logtarget = ${F2B_LOGDIR}/fail2ban\.log%g" /etc/fail2ban/fail2ban.conf
-sed -i "s/chain =.*/chain = $F2B_IPTABLES_CHAIN/g" /etc/fail2ban/action.d/iptables-common.conf
+if [[ -f /etc/fail2ban/action.d/iptables-common.conf ]]; then
+  sed -i "s/chain =.*/chain = $F2B_IPTABLES_CHAIN/g" /etc/fail2ban/action.d/iptables-common.conf
+else
+  echo "WARNING: /etc/fail2ban/action.d/iptables-common.conf not found, cannot set chain."
+fi
 cat > /etc/fail2ban/jail.local <<EOL
 [DEFAULT]
 maxretry = ${F2B_MAX_RETRY}
