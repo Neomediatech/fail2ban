@@ -17,6 +17,7 @@ RUN apt-get update && apt-get -y dist-upgrade && \
     rm -rf /etc/fail2ban/jail.d && \
     mkdir -p /var/run/fail2ban && \
     cd /tmp && \
+    APP_URL="https://api.github.com/repos/fail2ban/fail2ban/releases"
     if [ "$APP_VERSION" = "latest" ]; then \
 	TAG=""; \
     else \
@@ -24,7 +25,7 @@ RUN apt-get update && apt-get -y dist-upgrade && \
     fi && \
     echo "TAG=$TAG" && \
     echo "APP_VERSION=$APP_VERSION" && \
-    APP_VERSION="$(basename $(curl -s https://api.github.com/repos/fail2ban/fail2ban/releases/${TAG}${APP_VERSION} | jq -r '.tag_name'))" && \
+    APP_VERSION="$(basename $(curl -s $APP_URL/${TAG}${APP_VERSION} | jq -r '.tag_name'))" && \
     echo "APP_VERSION=$APP_VERSION" && \
     wget https://github.com/fail2ban/fail2ban/releases/download/${APP_VERSION}/fail2ban_${APP_VERSION}-1.upstream1_all.deb && \
     dpkg -i fail2ban_${APP_VERSION}-1.upstream1_all.deb && \
