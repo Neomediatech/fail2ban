@@ -3,11 +3,8 @@ FROM ghcr.io/neomediatech/ubuntu-base:24.04
 ENV SERVICE=fail2ban \
     APP_VERSION=latest
 
-LABEL maintainer="docker-dario@neomediatech.it" \ 
-      org.label-schema.version=$APP_VERSION \
-      org.label-schema.vcs-type=Git \
-      org.label-schema.vcs-url=https://github.com/Neomediatech/${SERVICE} \
-      org.label-schema.maintainer=Neomediatech
+LABEL org.opencontainers.image.source=https://github.com/Neomediatech/${SERVICE} \
+      org.opencontainers.package.name=fail2ban/fail2ban
 
 RUN apt-get update && apt-get -y dist-upgrade && \
     apt-get install -y --no-install-recommends --no-install-suggests \
