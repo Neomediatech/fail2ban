@@ -14,7 +14,7 @@ RUN apt-get update && apt-get -y dist-upgrade && \
     rm -rf /etc/fail2ban/jail.d && \
     mkdir -p /var/run/fail2ban && \
     cd /tmp && \
-    APP_URL="https://api.github.com/repos/fail2ban/fail2ban/releases"
+    APP_URL="https://api.github.com/repos/fail2ban/fail2ban/releases" && \
     if [ "$APP_VERSION" = "latest" ]; then \
 	TAG=""; \
     else \
