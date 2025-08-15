@@ -1,4 +1,4 @@
-lun 11 ago 2025, 18:10:21, UTC --- ghcr.io/neomediatech/fail2ban:0.11.2
+ven 15 ago 2025, 16:44:46, UTC --- ghcr.io/neomediatech/fail2ban:0.11.2
 
 Report Summary
 
@@ -12,7 +12,7 @@ Legend:
 - '0': Clean (no security findings detected)
 
 -------------------------------------------------------
-lun 11 ago 2025, 18:07:49, UTC --- ghcr.io/neomediatech/fail2ban:1.0.2
+ven 15 ago 2025, 16:43:43, UTC --- ghcr.io/neomediatech/fail2ban:1.0.2
 
 Report Summary
 
@@ -30,7 +30,7 @@ Legend:
 - '0': Clean (no security findings detected)
 
 -------------------------------------------------------
-lun 11 ago 2025, 18:08:24, UTC --- ghcr.io/neomediatech/fail2ban:latest
+ven 15 ago 2025, 16:43:36, UTC --- ghcr.io/neomediatech/fail2ban:latest
 
 Report Summary
 
