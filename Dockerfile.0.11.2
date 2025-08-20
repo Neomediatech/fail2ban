@@ -5,7 +5,8 @@ ENV SERVICE=fail2ban \
     APP_VERSION=0.11.2
 
 LABEL org.opencontainers.image.source=https://github.com/Neomediatech/${SERVICE} \
-      org.opencontainers.package.name=fail2ban/fail2ban
+      org.opencontainers.package.name=fail2ban/fail2ban \
+      it.neomediatech.app-label=github
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends --no-install-suggests \
