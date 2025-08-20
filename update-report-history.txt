@@ -4,3 +4,6 @@ lun 11 ago 2025, 18:09:45, UTC --- ghcr.io/neomediatech/fail2ban:0.11.2 done (im
 ven 15 ago 2025, 16:43:07, UTC --- ghcr.io/neomediatech/fail2ban:latest done (image build needed: true)
 ven 15 ago 2025, 16:43:13, UTC --- ghcr.io/neomediatech/fail2ban:1.0.2 done (image build needed: true)
 ven 15 ago 2025, 16:44:17, UTC --- ghcr.io/neomediatech/fail2ban:0.11.2 done (image build needed: true)
+mer 20 ago 2025, 20:30:46, CEST --- ghcr.io/neomediatech/fail2ban:latest done (image build needed: true)
+mer 20 ago 2025, 20:30:54, CEST --- ghcr.io/neomediatech/fail2ban:1.0.2 done (image build needed: true)
+mer 20 ago 2025, 20:32:04, CEST --- ghcr.io/neomediatech/fail2ban:0.11.2 done (image build needed: true)
