@@ -10,7 +10,7 @@ LABEL org.opencontainers.image.source=https://github.com/Neomediatech/${SERVICE}
 RUN apt-get update && apt-get -y dist-upgrade && \
     apt-get install -y --no-install-recommends --no-install-suggests \
                     python3 python3-systemd \
-                    wget ipset iptables ssmtp redis-tools curl whois ca-certificates jq && \
+                    ipset iptables ssmtp redis-tools curl whois ca-certificates jq && \
     rm -rf /var/lib/apt/lists* && \
     rm -rf /etc/fail2ban/jail.d && \
     mkdir -p /var/run/fail2ban && \
