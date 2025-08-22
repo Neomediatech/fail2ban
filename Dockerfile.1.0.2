@@ -11,7 +11,7 @@ LABEL org.opencontainers.image.source=https://github.com/Neomediatech/${SERVICE}
 RUN apt-get update && apt-get -y dist-upgrade && \
     apt-get install -y --no-install-recommends --no-install-suggests \
                     python3 python3-pip \
-                    ipset iptables ssmtp redis-tools curl whois ca-certificates jq && \
+                    ipset iptables ssmtp redis-tools curl whois jq && \
     python3 -m pip install pyasynchat --break-system-packages && \
     rm -rf /var/lib/apt/lists* && \
     mkdir -p /var/run/fail2ban && \
